@@ -89,4 +89,19 @@ app.get("/export", async (req, res) => {
   res.send('\uFEFF' + csv);
 });
 
+
+// DELETE /iscrizioni/:id  →  rimuove un'iscrizione per ID
+app.delete('/iscrizioni/:id', async (req, res) => {
+  if (req.headers['x-admin-key'] !== process.env.ADMIN_KEY)
+    return res.status(401).json({ ok: false, error: 'Non autorizzato' });
+
+  const { id } = req.params;
+  const result = await pool.query('DELETE FROM iscrizioni WHERE id = $1 RETURNING id', [id]);
+
+  if (result.rowCount === 0)
+    return res.status(404).json({ ok: false, error: 'Iscrizione non trovata' });
+
+  res.json({ ok: true, eliminato: id });
+});
+
 app.listen(PORT, () => console.log(`✅ Backend attivo su porta ${PORT}`));
