@@ -55,3 +55,22 @@ app.get('/admin', (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`✅ Backend attivo su porta ${PORT}`));
+
+// GET /export  →  scarica tutte le iscrizioni come CSV
+app.get('/export', (req, res) => {
+  if (req.headers['x-admin-key'] !== process.env.ADMIN_KEY)
+    return res.status(401).json({ ok: false, error: 'Non autorizzato' });
+
+  const rows = db.get('iscrizioni').sortBy('id').reverse().value();
+  const header = 'ID,Nome,Cognome,Email,Telefono,Data di nascita,Iscritto il';
+  const csv = [header, ...rows.map(r =>
+    [r.id, r.nome, r.cognome, r.email, r.telefono, r.nascita, r.createdAt]
+      .map(v => `"${String(v).replace(/"/g, '""')}"`)
+      .join(',')
+  )].join('\r\n');
+
+  const filename = `iscrizioni_${new Date().toISOString().slice(0,10)}.csv`;
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  res.send('\uFEFF' + csv); // BOM per compatibilità Excel italiano
+});
