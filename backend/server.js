@@ -58,7 +58,8 @@ app.post('/submit', async (req, res) => {
 
 // GET /admin
 app.get('/admin', async (req, res) => {
-  if (req.headers['x-admin-key'] !== process.env.ADMIN_KEY)
+  const key = req.headers['x-admin-key'] || req.query.key;
+  if (key !== process.env.ADMIN_KEY)
     return res.status(401).json({ ok: false, error: 'Non autorizzato' });
 
   const result = await pool.query('SELECT * FROM iscrizioni ORDER BY created_at DESC');
@@ -66,8 +67,9 @@ app.get('/admin', async (req, res) => {
 });
 
 // GET /export  →  CSV per Excel
-app.get('/export', async (req, res) => {
-  if (req.headers['x-admin-key'] !== process.env.ADMIN_KEY)
+app.get("/export", async (req, res) => {
+  const key = req.headers['x-admin-key'] || req.query.key;
+  if (key !== process.env.ADMIN_KEY)
     return res.status(401).json({ ok: false, error: 'Non autorizzato' });
 
   const result = await pool.query('SELECT * FROM iscrizioni ORDER BY created_at DESC');
