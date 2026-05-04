@@ -75,9 +75,9 @@ app.get("/export", async (req, res) => {
   const result = await pool.query('SELECT * FROM iscrizioni ORDER BY created_at DESC');
   const rows   = result.rows;
 
-  const header = 'ID;Nome;Cognome;Email;Telefono;Data di nascita;Iscritto il';
-  const csv = [header, ...rows.map(r =>
-    [`="${r.id}"`, r.nome, r.cognome, r.email, `="${r.telefono}"`, r.nascita,
+  const header = 'N°;ID;Nome;Cognome;Email;Telefono;Data di nascita;Iscritto il';
+  const csv = [header, ...rows.map((r, i) =>
+    [i + 1, `="${r.id}"`, r.nome, r.cognome, r.email, `="${r.telefono}"`, r.nascita,
      new Date(r.created_at).toLocaleString('it-IT')]
       .map(v => `"${String(v).replace(/"/g, '""')}"`)
       .join(';')
