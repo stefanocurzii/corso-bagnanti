@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Corso Assistenti Bagnanti</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root {
+    --ocean-deep: #003f6b;
+    --ocean-mid: #0077b6;
+    --ocean-light: #00b4d8;
+    --sky: #90e0ef;
+    --sand: #f4d06f;
+    --sand-dark: #c9a84c;
+    --lifeguard-red: #e63946;
+    --white: #ffffff;
+    --foam: rgba(255,255,255,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ocean-deep);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── SKY HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(
+      180deg,
+      #87ceeb 0%,
+      #b8e4f9 30%,
+      #0077b6 60%,
+      #003f6b 100%
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 2rem;
+  }
+
+  /* Sun */
+  .sun {
+    position: absolute;
+    top: 6%;
+    right: 12%;
+    width: 90px;
+    height: 90px;
+    background: radial-gradient(circle, #fff7a1, #ffd700, #f4a100);
+    border-radius: 50%;
+    box-shadow: 0 0 60px 30px rgba(255,200,0,0.35);
+    animation: sunpulse 4s ease-in-out infinite;
+  }
+  @keyframes sunpulse {
+    0%,100% { box-shadow: 0 0 60px 30px rgba(255,200,0,0.35); }
+    50% { box-shadow: 0 0 90px 50px rgba(255,200,0,0.55); }
+  }
+
+  /* Clouds */
+  .cloud {
+    position: absolute;
+    background: rgba(255,255,255,0.85);
+    border-radius: 50px;
+    filter: blur(1px);
+    animation: drift linear infinite;
+  }
+  .cloud::before,.cloud::after {
+    content:''; position:absolute; background:rgba(255,255,255,0.85); border-radius:50%;
+  }
+  .c1 { width:120px;height:35px; top:10%; left:-150px; animation-duration:40s; animation-delay:0s; }
+  .c1::before { width:60px;height:60px; top:-30px; left:15px; }
+  .c1::after  { width:45px;height:45px; top:-22px; left:55px; }
+  .c2 { width:80px;height:25px; top:18%; left:-100px; animation-duration:55s; animation-delay:-20s; }
+  .c2::before { width:40px;height:40px; top:-20px; left:10px; }
+  .c2::after  { width:32px;height:32px; top:-15px; left:38px; }
+  .c3 { width:160px;height:40px; top:6%; left:-200px; animation-duration:70s; animation-delay:-35s; }
+  .c3::before { width:70px;height:70px; top:-38px; left:20px; }
+  .c3::after  { width:55px;height:55px; top:-28px; left:75px; }
+  @keyframes drift { from { transform:translateX(0); } to { transform:translateX(120vw); } }
+
+  /* Tower SVG */
+  .tower-wrap {
+    position: absolute;
+    bottom: 180px;
+    left: 5%;
+    opacity: 0.95;
+    animation: towersway 6s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  @keyframes towersway {
+    0%,100% { transform: rotate(0deg); }
+    50% { transform: rotate(0.5deg); }
+  }
+
+  /* Seagulls */
+  .seagull {
+    position: absolute;
+    font-size: 1.4rem;
+    opacity: 0.7;
+    animation: fly linear infinite;
+  }
+  .sg1 { top: 15%; left: -40px; animation-duration: 18s; animation-delay: 0s; }
+  .sg2 { top: 22%; left: -40px; animation-duration: 25s; animation-delay: -10s; font-size: 1rem; }
+  @keyframes fly {
+    from { transform: translateX(0); }
+    to   { transform: translateX(110vw); }
+  }
+
+  /* Waves */
+  .waves-wrap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  .wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%;
+    height: 120px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120'%3E%3Cpath fill='%230077b6' d='M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z'/%3E%3C/svg%3E") repeat-x;
+    background-size: 50% 100%;
+    animation: wave linear infinite;
+  }
+  .wave1 { opacity: 1;   animation-duration: 8s;  bottom: 0px; }
+  .wave2 { opacity: 0.5; animation-duration: 12s; bottom: 20px; filter: blur(2px); }
+  .wave3 { opacity: 0.3; animation-duration: 16s; bottom: 35px; filter: blur(4px); }
+  @keyframes wave {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* Hero content */
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding-bottom: 140px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--lifeguard-red);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    border-radius: 100px;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 4px 20px rgba(230,57,70,0.4);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: #fff;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.3);
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  h1 span { color: var(--sand); }
+
+  .subtitle {
+    margin-top: 1.2rem;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.85);
+    max-width: 480px;
+    line-height: 1.6;
+    animation: fadeUp 0.7s 0.2s ease both;
+  }
+
+  .scroll-cta {
+    margin-top: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    animation: fadeUp 0.7s 0.3s ease both, bounce 2s 1.5s ease-in-out infinite;
+    cursor: pointer;
+  }
+  .scroll-cta svg { animation: arrowbounce 1.5s ease-in-out infinite; }
+  @keyframes arrowbounce {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(24px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  /* ── FORM SECTION ── */
+  .form-section {
+    background: linear-gradient(180deg, var(--ocean-deep) 0%, #001e35 100%);
+    padding: 80px 20px 100px;
+    position: relative;
+  }
+
+  .form-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 Q45 15 60 0 Q45 15 60 30 Q45 15 30 30 Q15 15 0 30 Q15 15 0 0 Q15 15 30 0Z' fill='none' stroke='rgba(0,180,216,0.04)' stroke-width='1'/%3E%3C/svg%3E") repeat;
+    pointer-events: none;
+  }
+
+  .section-label {
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ocean-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    text-align: center;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .section-title span { color: var(--sand); }
+
+  .section-desc {
+    text-align: center;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.95rem;
+    margin-bottom: 3rem;
+    max-width: 440px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* Form card */
+  .form-card {
+    max-width: 520px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px;
+    padding: 40px 36px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    position: relative;
+  }
+
+  .form-card::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: 20%; right: 20%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--ocean-light), var(--sand), transparent);
+    border-radius: 2px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .field {
+    margin-bottom: 18px;
+  }
+
+  label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 7px;
+  }
+
+  input {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 13px 16px;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+  input::placeholder { color: rgba(255,255,255,0.25); }
+  input:focus {
+    border-color: var(--ocean-light);
+    background: rgba(0,180,216,0.08);
+    box-shadow: 0 0 0 3px rgba(0,180,216,0.15);
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) opacity(0.4);
+    cursor: pointer;
+  }
+
+  .consent {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin: 20px 0;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.5;
+  }
+  .consent input[type="checkbox"] {
+    width: 18px; height: 18px;
+    min-width: 18px;
+    accent-color: var(--ocean-light);
+    margin-top: 2px;
+  }
+  .consent a { color: var(--ocean-light); text-decoration: underline; }
+
+  .btn-submit {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--lifeguard-red), #c1121f);
+    border: none;
+    border-radius: 14px;
+    color: #fff;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    box-shadow: 0 8px 30px rgba(230,57,70,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-submit::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: shimmer 2.5s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    to { left: 160%; }
+  }
+  .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(230,57,70,0.5); }
+  .btn-submit:active { transform: translateY(0); }
+
+  /* Success */
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 30px 20px;
+    animation: fadeUp 0.5s ease both;
+  }
+  .success-msg .check { font-size: 3rem; margin-bottom: 1rem; }
+  .success-msg h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--sand); margin-bottom: 0.5rem; }
+  .success-msg p { color: rgba(255,255,255,0.6); font-size: 0.95rem; }
+
+  /* ── QR SECTION ── */
+  .qr-section {
+    background: #001e35;
+    padding: 60px 20px 80px;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .qr-box {
+    display: inline-block;
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 6px rgba(0,180,216,0.2);
+    margin: 2rem 0 1.5rem;
+  }
+
+  .qr-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-top: 0.5rem;
+  }
+
+  /* ── FEATURES ── */
+  .features {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    max-width: 700px;
+    margin: 0 auto 0;
+    padding: 0 20px;
+  }
+  .feat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+  }
+  .feat-icon { font-size: 1.3rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #001020;
+    padding: 24px 20px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.25);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  @media (max-width: 520px) {
+    .form-card { padding: 28px 20px; }
+    .form-row { grid-template-columns: 1fr; }
+    .tower-wrap { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+
+  <div class="sun"></div>
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="cloud c3"></div>
+  <div class="seagull sg1">〜</div>
+  <div class="seagull sg2">〜</div>
+
+  <!-- Lifeguard Tower SVG -->
+  <div class="tower-wrap">
+    <svg width="130" height="220" viewBox="0 0 130 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Platform -->
+      <rect x="20" y="80" width="90" height="60" rx="4" fill="#e63946"/>
+      <rect x="15" y="75" width="100" height="10" rx="3" fill="#c1121f"/>
+      <!-- Window -->
+      <rect x="38" y="92" width="54" height="35" rx="4" fill="#90e0ef" opacity="0.6"/>
+      <rect x="38" y="92" width="54" height="35" rx="4" stroke="white" stroke-width="2"/>
+      <!-- Cross -->
+      <rect x="61" y="88" width="8" height="48" rx="2" fill="white"/>
+      <rect x="38" y="108" width="54" height="8" rx="2" fill="white"/>
+      <!-- Legs -->
+      <rect x="28" y="140" width="10" height="70" rx="3" fill="#c9a84c"/>
+      <rect x="92" y="140" width="10" height="70" rx="3" fill="#c9a84c"/>
+      <rect x="48" y="155" width="34" height="8" rx="3" fill="#c9a84c"/>
+      <!-- Flag -->
+      <rect x="65" y="30" width="3" height="50" fill="#c9a84c"/>
+      <polygon points="68,30 100,42 68,54" fill="#e63946"/>
+      <!-- Base -->
+      <rect x="15" y="205" width="100" height="12" rx="4" fill="#c9a84c"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="badge">🏊 Formazione Professionale</div>
+    <h1>Corso di<br>Preparazione<br><span>Assistenti</span><br>Bagnanti</h1>
+    <p class="subtitle">Diventa un professionista della sicurezza in acqua. Iscriviti ora e inizia il percorso che salva vite.</p>
+    <div class="scroll-cta" onclick="document.querySelector('.form-section').scrollIntoView({behavior:'smooth'})">
+      <span>Iscriviti subito</span>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M8 3v10M3 9l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Feature strip -->
+  <div class="features" style="position:relative;z-index:10;margin-top:auto;padding-bottom:160px;">
+    <div class="feat"><span class="feat-icon">📜</span><span>Certificazione ufficiale</span></div>
+    <div class="feat"><span class="feat-icon">🌊</span><span>Prove pratiche in acqua</span></div>
+    <div class="feat"><span class="feat-icon">🚑</span><span>Primo soccorso incluso</span></div>
+  </div>
+
+  <div class="waves-wrap">
+    <div class="wave wave1"></div>
+    <div class="wave wave2"></div>
+    <div class="wave wave3"></div>
+  </div>
+</section>
+
+<!-- ══ FORM ══ -->
+<section class="form-section" id="form">
+  <p class="section-label">📋 Registrazione</p>
+  <h2 class="section-title">Prenota il <span>tuo posto</span></h2>
+  <p class="section-desc">Compila il modulo per ricevere tutte le informazioni e riservare il tuo posto al corso.</p>
+
+  <div class="form-card">
+    <div id="formContent">
+      <div class="form-row">
+        <div class="field">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" placeholder="Mario" required>
+        </div>
+        <div class="field">
+          <label for="cognome">Cognome</label>
+          <input type="text" id="cognome" placeholder="Rossi" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="mario.rossi@email.com" required>
+      </div>
+
+      <div class="field">
+        <label for="telefono">Numero di telefono</label>
+        <input type="tel" id="telefono" placeholder="+39 333 000 0000" required>
+      </div>
+
+      <div class="field">
+        <label for="nascita">Data di nascita</label>
+        <input type="date" id="nascita" required>
+      </div>
+
+      <div class="consent">
+        <input type="checkbox" id="privacy" required>
+        <label for="privacy" style="text-transform:none;font-size:0.82rem;letter-spacing:0;color:rgba(255,255,255,0.45);">
+          Acconsento al trattamento dei miei dati personali secondo la <a href="#">Privacy Policy</a>.
+        </label>
+      </div>
+
+      <button class="btn-submit" onclick="handleSubmit()">Iscrivimi al Corso →</button>
+    </div>
+
+    <div class="success-msg" id="successMsg">
+      <div class="check">✅</div>
+      <h3>Iscrizione ricevuta!</h3>
+      <p>Ti contatteremo presto con tutti i dettagli del corso. Controlla la tua email.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ QR CODE ══ -->
+<section class="qr-section">
+  <p class="section-label">📲 Condividi</p>
+  <h2 class="section-title">Scansiona il <span>QR Code</span></h2>
+  <div class="qr-box">
+    <div id="qrcode"></div>
+  </div>
+  <p class="qr-label">Punta la fotocamera del tuo smartphone</p>
+</section>
+
+<footer>
+  © 2025 Corso Assistenti Bagnanti — Tutti i diritti riservati
+</footer>
+
+<script>
+  // QR Code generation
+  document.addEventListener('DOMContentLoaded', function() {
+    var url = window.location.href;
+    new QRCode(document.getElementById('qrcode'), {
+      text: url,
+      width: 180,
+      height: 180,
+      colorDark: '#003f6b',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  });
+
+  // Sostituisci con l'URL Railway dopo il deploy
+  var BACKEND_URL = 'https://INSERISCI-URL-RAILWAY.up.railway.app';
+
+  async function handleSubmit() {
+    var nome     = document.getElementById('nome').value.trim();
+    var cognome  = document.getElementById('cognome').value.trim();
+    var email    = document.getElementById('email').value.trim();
+    var telefono = document.getElementById('telefono').value.trim();
+    var nascita  = document.getElementById('nascita').value;
+    var privacy  = document.getElementById('privacy').checked;
+
+    if (!nome || !cognome || !email || !telefono || !nascita) {
+      alert('Per favore compila tutti i campi.'); return;
+    }
+    if (!privacy) {
+      alert('Devi accettare la Privacy Policy per procedere.'); return;
+    }
+
+    var btn = document.querySelector('.btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Invio in corso...';
+
+    try {
+      var res  = await fetch(BACKEND_URL + '/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, cognome, email, telefono, nascita })
+      });
+      var data = await res.json();
+      if (data.ok) {
+        document.getElementById('formContent').style.display = 'none';
+        document.getElementById('successMsg').style.display = 'block';
+      } else {
+        alert('Errore: ' + (data.error || 'Riprovare'));
+        btn.disabled = false;
+        btn.textContent = 'Iscrivimi al Corso \u2192';
+      }
+    } catch(e) {
+      alert('Errore di connessione. Riprova tra poco.');
+      btn.disabled = false;
+      btn.textContent = 'Iscrivimi al Corso \u2192';
+    }
+  }
+</script>
+</body>
+</html>
