@@ -77,7 +77,7 @@ app.get("/export", async (req, res) => {
 
   const header = 'ID;Nome;Cognome;Email;Telefono;Data di nascita;Iscritto il';
   const csv = [header, ...rows.map(r =>
-    [r.id, r.nome, r.cognome, r.email, r.telefono, r.nascita,
+    [`="${r.id}"`, r.nome, r.cognome, r.email, `="${r.telefono}"`, r.nascita,
      new Date(r.created_at).toLocaleString('it-IT')]
       .map(v => `"${String(v).replace(/"/g, '""')}"`)
       .join(';')
