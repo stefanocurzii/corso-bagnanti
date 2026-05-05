@@ -312,9 +312,16 @@
     background: rgba(0,180,216,0.08);
     box-shadow: 0 0 0 3px rgba(0,180,216,0.15);
   }
+  input[type="date"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    box-sizing: border-box;
+  }
   input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1) opacity(0.4);
     cursor: pointer;
+    flex-shrink: 0;
   }
 
   .consent {
@@ -530,13 +537,13 @@
 
       <div class="field">
         <label for="nascita">Data di nascita</label>
-        <input type="date" id="nascita" required>
+        <input type="date" id="nascita" required max="2015-01-01" placeholder="gg/mm/aaaa">
       </div>
 
       <div class="consent">
         <input type="checkbox" id="privacy" required>
         <label for="privacy" style="text-transform:none;font-size:0.82rem;letter-spacing:0;color:rgba(255,255,255,0.45);">
-          Acconsento al trattamento dei miei dati personali secondo la <a href="#">Privacy Policy</a>.
+          Acconsento al trattamento dei miei dati personali secondo la <a href="privacy.html" target="_blank">Privacy Policy</a>.
         </label>
       </div>
 
