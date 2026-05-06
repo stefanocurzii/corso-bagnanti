@@ -97,7 +97,7 @@
     transform-origin: bottom center;
   }
   @media (max-width: 520px) {
-    .tower-wrap { transform: scale(0.65); transform-origin: bottom left; bottom: 130px; }
+    .tower-wrap { transform: scale(0.5); transform-origin: bottom left; bottom: 155px; left: 0; }
   }
   @keyframes towersway {
     0%,100% { transform: rotate(0deg); }
@@ -498,6 +498,18 @@
       filter: drop-shadow(0 8px 24px rgba(0,0,0,0.35));
     ">
   </div>
+  <style>
+    @media (max-width: 520px) {
+      .hero-lifeguard {
+        bottom: auto !important;
+        top: 18% !important;
+        right: -8px !important;
+      }
+      .hero-lifeguard img {
+        height: 220px !important;
+      }
+    }
+  </style>
   <div class="hero-content">
     <div class="badge">🏊 Formazione Professionale</div>
     <h1>Corso di<br>Preparazione<br><span style="color:#e63946;">Assistenti<br>Bagnanti</span></h1>
