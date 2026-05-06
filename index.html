@@ -90,11 +90,14 @@
   /* Tower SVG */
   .tower-wrap {
     position: absolute;
-    bottom: 180px;
-    left: 5%;
+    bottom: 140px;
+    left: 2%;
     opacity: 0.95;
     animation: towersway 6s ease-in-out infinite;
     transform-origin: bottom center;
+  }
+  @media (max-width: 520px) {
+    .tower-wrap { transform: scale(0.65); transform-origin: bottom left; bottom: 130px; }
   }
   @keyframes towersway {
     0%,100% { transform: rotate(0deg); }
@@ -440,32 +443,10 @@
   @media (max-width: 520px) {
     .form-card { padding: 28px 20px; }
     .form-row { grid-template-columns: 1fr; }
-    .tower-wrap { display: none; }
-    .hero-lifeguard { display: none; }
   }
 </style>
 </head>
 <body>
-
-<!-- ══ NAVBAR ══ -->
-<nav style="
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 24px;
-  background: rgba(0,20,40,0.75);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-">
-  <img src="logo.jpg"
-    alt="Costa Sicura Lifeguard"
-    style="height: 64px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4));"
-  >
-</nav>
-<div style="height: 84px;"></div>
 
 <!-- ══ HERO ══ -->
 <section class="hero">
@@ -502,89 +483,20 @@
   </div>
 
 
-  <!-- Bagnino + Salvagente hero -->
+  <!-- Bagnino PNG -->
   <div class="hero-lifeguard" style="
     position: absolute;
-    right: 3%;
-    bottom: 160px;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: towersway 5s ease-in-out infinite;
-    transform-origin: bottom center;
-    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.4));
+    right: 0;
+    bottom: 140px;
+    z-index: 5;
+    pointer-events: none;
   ">
-    <svg width="140" height="280" viewBox="0 0 140 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Salvagente 3D -->
-      <ellipse cx="70" cy="48" rx="42" ry="42" fill="url(#ring_outer)"/>
-      <ellipse cx="70" cy="48" rx="42" ry="42" fill="none" stroke="#c0392b" stroke-width="1" opacity="0.3"/>
-      <ellipse cx="70" cy="48" rx="24" ry="24" fill="url(#ring_hole)"/>
-      <!-- Strisce rosse salvagente -->
-      <path d="M70 6 A42 42 0 0 1 106 30 L90 38 A24 24 0 0 0 70 24 Z" fill="#e63946"/>
-      <path d="M70 90 A42 42 0 0 1 34 66 L50 58 A24 24 0 0 0 70 72 Z" fill="#e63946"/>
-      <path d="M112 48 A42 42 0 0 1 88 84 L80 68 A24 24 0 0 0 94 48 Z" fill="#e63946"/>
-      <path d="M28 48 A42 42 0 0 1 52 12 L60 28 A24 24 0 0 0 46 48 Z" fill="#e63946"/>
-      <!-- Brillantino 3D top -->
-      <ellipse cx="70" cy="8" rx="8" ry="4" fill="rgba(255,255,255,0.5)" rx="8"/>
-      <!-- Corda salvagente -->
-      <path d="M30 20 Q18 48 30 76" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" fill="none" stroke-dasharray="4 3"/>
-      <path d="M110 20 Q122 48 110 76" stroke="#c9a84c" stroke-width="3" stroke-linecap="round" fill="none" stroke-dasharray="4 3"/>
-
-      <!-- Corpo bagnino -->
-      <!-- Gambe -->
-      <rect x="58" y="230" width="14" height="44" rx="7" fill="#f4a261"/>
-      <rect x="72" y="230" width="14" height="44" rx="7" fill="#e76f51"/>
-      <!-- Costume shorts -->
-      <rect x="52" y="210" width="40" height="30" rx="8" fill="#e63946"/>
-      <rect x="52" y="226" width="40" height="14" rx="4" fill="#c1121f"/>
-      <!-- Torso -->
-      <rect x="50" y="160" width="44" height="58" rx="10" fill="#f4a261"/>
-      <!-- Cintura -->
-      <rect x="50" y="205" width="44" height="8" rx="4" fill="#c9a84c"/>
-      <!-- Fischietto -->
-      <line x1="72" y1="185" x2="72" y2="170" stroke="#c9a84c" stroke-width="2"/>
-      <ellipse cx="72" cy="168" rx="5" ry="3" fill="#f4d06f"/>
-      <!-- Braccia -->
-      <rect x="28" y="162" width="22" height="11" rx="5.5" fill="#f4a261" transform="rotate(20 28 167)"/>
-      <rect x="94" y="162" width="22" height="11" rx="5.5" fill="#f4a261" transform="rotate(-30 116 167)"/>
-      <!-- Mano con binocolo -->
-      <ellipse cx="24" cy="178" rx="7" ry="5" fill="#555" opacity="0.9"/>
-      <ellipse cx="34" cy="178" rx="7" ry="5" fill="#555" opacity="0.9"/>
-      <rect x="24" y="175" width="17" height="6" rx="2" fill="#333" opacity="0.9"/>
-      <!-- Testa -->
-      <ellipse cx="72" cy="148" rx="22" ry="22" fill="#f4a261"/>
-      <!-- Occhi -->
-      <ellipse cx="64" cy="146" rx="3" ry="3.5" fill="#2d3436"/>
-      <ellipse cx="80" cy="146" rx="3" ry="3.5" fill="#2d3436"/>
-      <ellipse cx="65" cy="145" rx="1" ry="1" fill="white"/>
-      <ellipse cx="81" cy="145" rx="1" ry="1" fill="white"/>
-      <!-- Sorriso -->
-      <path d="M64 155 Q72 162 80 155" stroke="#c0392b" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <!-- Cappello bagnino -->
-      <ellipse cx="72" cy="128" rx="24" ry="6" fill="#e63946"/>
-      <rect x="55" y="108" width="34" height="22" rx="6" fill="#e63946"/>
-      <rect x="60" y="112" width="24" height="14" rx="4" fill="#c1121f"/>
-      <rect x="63" y="114" width="18" height="10" rx="3" fill="white" opacity="0.9"/>
-      <!-- Scritta cappello -->
-      <text x="72" y="122" font-family="Arial" font-size="5" fill="#e63946" text-anchor="middle" font-weight="bold">SOS</text>
-      <!-- Orecchie -->
-      <ellipse cx="50" cy="148" rx="5" ry="6" fill="#f4a261"/>
-      <ellipse cx="94" cy="148" rx="5" ry="6" fill="#f4a261"/>
-
-      <!-- Defs gradients -->
-      <defs>
-        <radialGradient id="ring_outer" cx="40%" cy="35%" r="65%">
-          <stop offset="0%" stop-color="#e8e8e8"/>
-          <stop offset="60%" stop-color="#c8c8c8"/>
-          <stop offset="100%" stop-color="#a0a0a0"/>
-        </radialGradient>
-        <radialGradient id="ring_hole" cx="40%" cy="35%" r="65%">
-          <stop offset="0%" stop-color="#87ceeb"/>
-          <stop offset="100%" stop-color="#0077b6"/>
-        </radialGradient>
-      </defs>
-    </svg>
+    <img src="bagnino.png" alt="Bagnino" style="
+      height: clamp(220px, 35vw, 380px);
+      width: auto;
+      display: block;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.35));
+    ">
   </div>
   <div class="hero-content">
     <div class="badge">🏊 Formazione Professionale</div>
